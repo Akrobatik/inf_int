@@ -10,7 +10,7 @@ inf_int::inf_int() {
 }
 
 inf_int::inf_int(int value) {
-  char digits_temp[10 + 1];  // int 타입의 최대 길이 -> 10
+  char digits_temp[10 + 1];  // max string length of int type -> 10
 
   thesign = (value >= 0);
 
@@ -32,7 +32,7 @@ inf_int::inf_int(int value) {
 inf_int::inf_int(const char* value_string) {
   if (value_string[0] == '-') {
     thesign = false;
-    value_string += 1;  // 숫자 데이터 시작으로 포인터 이동
+    value_string += 1;  // move pointer to start-number
   } else {
     thesign = true;
   }
@@ -40,9 +40,7 @@ inf_int::inf_int(const char* value_string) {
   length = strlen(value_string);
 
   digits = new char[length + 1];
-  for (long long i = 0; i < length;
-       i++) {  // length 데이터 타입이 unsigned int (4BYTE) 이므로 부호있는
-               // 8BYTE 정수형인 long long 사용
+  for (long long i = 0; i < length; i++) {
     digits[i] = value_string[length - i - 1];
   }
   digits[length] = '\0';
@@ -83,25 +81,19 @@ bool operator!=(const inf_int& a, const inf_int& b) {
 }
 
 bool operator>(const inf_int& a, const inf_int& b) {
-  // 부호가 다른 경우
   if (a.thesign != b.thesign) {
     return a.thesign;
   }
 
-  // 부호가 같은 경우만 아래 코드 진행
-  bool sign = a.thesign;  // a, b 부호가 같으므로 아무거나 가능
+  bool sign = a.thesign;
 
-  // 길이가 다른 경우
   if (a.length != b.length) {
     return (a.length > b.length) == sign;
   }
 
-  // 부호가 같고 길이가 같은 경우만 아래 코드 진행
-  unsigned int length = a.length;  // a, b 길이가 같으므로 아무거나 가능
+  unsigned int length = a.length;
 
-  for (long long i = length - 1; i >= 0;
-       i--) {  // length 데이터 타입이 unsigned int (4BYTE) 이므로 부호있는
-               // 8BYTE 정수형인 long long 사용
+  for (long long i = length - 1; i >= 0; i--) {
     if (a.digits[i] == b.digits[i]) {
       continue;
     }
@@ -109,7 +101,6 @@ bool operator>(const inf_int& a, const inf_int& b) {
     return (a.digits[i] > b.digits[i]) == sign;
   }
 
-  // a, b 가 같은 경우
   return false;
 }
 
@@ -125,7 +116,7 @@ inf_int operator+(const inf_int& a, const inf_int& b) {
     int shorter_length = (a_is_longer ? b.length : a.length);
 
     inf_int add;
-    int add_max_length = longer_length + 1;  // + 연산 결과 가능한 length 최대값
+    int add_max_length = longer_length + 1;
     char* add_digits = new char[add_max_length + 1];
 
     bool carry = false;
@@ -177,7 +168,7 @@ inf_int operator+(const inf_int& a, const inf_int& b) {
     int smaller_length = (a_is_bigger ? b.length : a.length);
 
     inf_int sub;
-    int sub_max_length = bigger_length;  // + 연산 결과 가능한 length 최대값
+    int sub_max_length = bigger_length;
     char* sub_digits = new char[sub_max_length + 1];
 
     bool carry = false;
@@ -256,9 +247,7 @@ std::ostream& operator<<(std::ostream& out, const inf_int& input) {
     out << '-';
   }
 
-  for (long long i = input.length - 1; i >= 0;
-       i--) {  // length 데이터 타입이 unsigned int (4BYTE) 이므로 부호있는
-               // 8BYTE 정수형인 long long 사용
+  for (long long i = input.length - 1; i >= 0; i--) {
     out << input.digits[i];
   }
 
