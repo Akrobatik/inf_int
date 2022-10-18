@@ -1,4 +1,4 @@
-#include "inf_int.h"
+﻿#include "inf_int.h"
 
 inf_int::inf_int() {
   thesign = true;
@@ -10,7 +10,7 @@ inf_int::inf_int() {
 }
 
 inf_int::inf_int(int value) {
-  char digits_temp[10 + 1];  // max string length of int type -> 10
+  char digits_temp[10 + 1]; 
 
   thesign = (value >= 0);
 
@@ -18,7 +18,7 @@ inf_int::inf_int(int value) {
 
   unsigned int i = 0;
   do {
-    digits_temp[i++] = value % 10 + 48;  // '0' -> 48
+    digits_temp[i++] = value % 10 + 48;
     value /= 10;
   } while (value != 0);
 
@@ -32,7 +32,7 @@ inf_int::inf_int(int value) {
 inf_int::inf_int(const char* value_string) {
   if (value_string[0] == '-') {
     thesign = false;
-    value_string += 1;  // move pointer to start-number
+    value_string += 1;  
   } else {
     thesign = true;
   }
@@ -85,7 +85,7 @@ bool operator>(const inf_int& a, const inf_int& b) {
     return a.thesign;
   }
 
-  bool sign = a.thesign;
+  bool sign = a.thesign; 
 
   if (a.length != b.length) {
     return (a.length > b.length) == sign;
@@ -116,14 +116,13 @@ inf_int operator+(const inf_int& a, const inf_int& b) {
     int shorter_length = (a_is_longer ? b.length : a.length);
 
     inf_int add;
-    int add_max_length = longer_length + 1;
+    int add_max_length = longer_length + 1; 
     char* add_digits = new char[add_max_length + 1];
 
     bool carry = false;
 
     for (size_t i = 0; i < shorter_length; i++) {
-      int value = (int)(a.digits[i] - 48) + (int)(b.digits[i] - 48) +
-                  (carry ? 1 : 0);  // '0' -> 48
+      int value = (int)(a.digits[i] - 48) + (int)(b.digits[i] - 48) + (carry ? 1 : 0);  // '0' -> 48
       carry = value >= 10;
 
       add_digits[i] = value % 10 + 48;
@@ -168,14 +167,13 @@ inf_int operator+(const inf_int& a, const inf_int& b) {
     int smaller_length = (a_is_bigger ? b.length : a.length);
 
     inf_int sub;
-    int sub_max_length = bigger_length;
+    int sub_max_length = bigger_length; 
     char* sub_digits = new char[sub_max_length + 1];
 
     bool carry = false;
 
     for (size_t i = 0; i < smaller_length; i++) {
-      int value = (int)(bigger_digits[i] - 48) - (int)(smaller_digits[i] - 48) -
-                  (carry ? 1 : 0);  // '0' -> 48
+      int value = (int)(bigger_digits[i] - 48) - (int)(smaller_digits[i] - 48) - (carry ? 1 : 0);  // '0' -> 48
       carry = value < 0;
 
       sub_digits[i] = value % 10 + (carry ? 10 : 0) + 48;
